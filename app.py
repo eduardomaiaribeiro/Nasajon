@@ -78,6 +78,14 @@ def update_task(task_id):
         }), 404
     
     data = request.get_json()
+    
+    # Check if data is None (invalid JSON or no content-type)
+    if data is None:
+        return jsonify({
+            'success': False,
+            'error': 'Invalid JSON data'
+        }), 400
+    
     task = tasks[task_id]
     
     if 'title' in data:

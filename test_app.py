@@ -124,6 +124,29 @@ def test_update_task(client):
     assert data['data']['status'] == 'completed'
 
 
+def test_update_task_with_empty_body(client):
+    """Test updating a task with empty JSON body"""
+    # First create a task
+    task_data = {
+        'title': 'Test Task',
+        'description': 'Test Description'
+    }
+    create_response = client.post('/api/tasks',
+                                 data=json.dumps(task_data),
+                                 content_type='application/json')
+    created_task = json.loads(create_response.data)['data']
+    task_id = created_task['id']
+    
+    # Try to update with empty JSON object (valid but no changes)
+    response = client.put(f'/api/tasks/{task_id}',
+                         data=json.dumps({}),
+                         content_type='application/json')
+    # Should succeed with 200 (no error, just no changes)
+    assert response.status_code == 200
+    data = json.loads(response.data)
+    assert data['success'] is True
+
+
 def test_delete_task(client):
     """Test deleting a task"""
     # First create a task

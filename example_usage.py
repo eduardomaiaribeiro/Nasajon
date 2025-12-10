@@ -35,6 +35,11 @@ def main():
     }
     response = requests.post(f"{BASE_URL}/tasks", json=task_data)
     print_response(response, "Create Task")
+    
+    if response.status_code != 201 or not response.json().get('success'):
+        print("\n❌ ERROR: Failed to create task")
+        return
+    
     task_id = response.json()['data']['id']
     
     # 3. Create another task
