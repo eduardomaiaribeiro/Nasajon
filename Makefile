@@ -12,7 +12,7 @@ install:
 	pip install -r requirements.txt
 
 run:
-	python app.py
+	FLASK_DEBUG=true python app.py
 
 test:
 	pytest test_app.py -v

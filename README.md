@@ -45,12 +45,32 @@ pip install -r requirements.txt
 
 ## ▶️ Executando a Aplicação / Running the Application
 
-Para iniciar o servidor:
+### Modo de Desenvolvimento / Development Mode
+
+Para iniciar o servidor em modo de desenvolvimento:
 ```bash
+# Com debug habilitado (apenas para desenvolvimento)
+FLASK_DEBUG=true python app.py
+
+# Ou simplesmente
 python app.py
 ```
 
 O servidor estará disponível em: `http://localhost:5000`
+
+### Modo de Produção / Production Mode
+
+⚠️ **IMPORTANTE**: Não use o servidor de desenvolvimento em produção!
+
+Para produção, use um servidor WSGI como gunicorn ou uWSGI:
+
+```bash
+# Instale gunicorn
+pip install gunicorn
+
+# Execute em produção
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
 
 ## 🧪 Executando os Testes / Running Tests
 
